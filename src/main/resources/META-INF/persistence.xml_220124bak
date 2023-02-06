@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!-- EntityManager용 설정 -->
+	<persistence-unit name="jpabook"> <!-- 이름 -->
+		<properties>
+            <!-- 필수 속성 -->
+            <property name="javax.persistence.jdbc.driver"
+                value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.user"
+                value="examful" />
+            <property name="javax.persistence.jdbc.password"
+                value="examful!!" />
+            <!-- 로컬일때 -->
+            <!--   
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://tssue.shop:3306/examful?useSSL=false&amp;serverTimezone=UTC" />
+            -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/examful?useSSL=false&amp;serverTimezone=UTC&amp;autoReconnect=true" />
+            <!-- 서버(카페24) 일때 -->
+                
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> <!-- DB고유 기능 사용 -->
+			<property name="hibernate.show_sql" value="true" /> <!-- 콘솔창에 실행되는 SQL문 출력 -->
+			<property name="hibernate.format_sql" value="true" /> <!-- SQL출력시 보기 쉽게 정렬 -->
+			<property name="hibernate.use_sql_comments" value="true" /> <!-- SQL출력 시 주석도 같이 출력 -->
+			<property name="hibernate.id.new_generator_mappings" value="true" /> <!-- JPA표준에 맞춘 새로운 키 생성 전략 설정 -->
+		</properties>
+	</persistence-unit>
+</persistence>

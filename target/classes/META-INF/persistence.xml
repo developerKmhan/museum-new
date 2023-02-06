@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!-- EntityManager용 설정 -->
+	<persistence-unit name="jpabook">
+		<properties>
+            <!-- 직접 추가해도 되니까 고정이면서 중복이면 여기에 추가하는게 더 효율적 -->
+		</properties>
+	<!-- 
+		<properties>
+            <property name="javax.persistence.jdbc.driver"
+                value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.user" value="examful" />
+            <property name="javax.persistence.jdbc.password"
+                value="examful!!" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/examful?useSSL=false&amp;serverTimezone=UTC&amp;autoReconnect=true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.use_sql_comments" value="true" />
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+		</properties>
+		 -->
+	</persistence-unit>
+</persistence>

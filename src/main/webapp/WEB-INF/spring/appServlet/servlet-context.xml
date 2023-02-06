@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-3.2.xsd                           
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-3.0.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- 어노테이션을 사용가능하도록 설정 -->
+	<annotation-driven />
+	
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+	 
+    <beans:bean id="templateResolver"
+          class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <beans:property name="prefix" value="/WEB-INF/templates/" />
+        <beans:property name="suffix" value=".html" />
+        <!--뷰리졸버에서 utf-8로 반환할것을 설정-->
+        <beans:property name="characterEncoding" value="utf-8" />
+        <beans:property name="templateMode" value="HTML" />
+    </beans:bean>
+
+    <!--바로위의 id="templateResolver" 설정을 가져와서 타임리프에 적용-->
+	<beans:bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<beans:property name="templateResolver" ref="templateResolver" />
+	</beans:bean>
+	
+    <!--templateEngine bean을 매개로 타임리프 엔진에 templateResolver 의 설정을 전달-->
+	<beans:bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <beans:property name="templateEngine" ref="templateEngine" />
+        <!--뷰 리졸버에서 온 자료를 utf-8 형식으로 출력하게 설정-->
+        <beans:property name="characterEncoding" value="utf-8"/>
+	</beans:bean>
+	
+	<context:component-scan base-package="kr.go.museum.dino.smartapp">
+	</context:component-scan>
+	<!-- 소스코드에서 properties 사용 -->
+    <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="location" value="classpath:config/application-#{systemProperties['spring.profiles.active']}.properties"/>
+      	<beans:property name="fileEncoding" value="UTF-8" />
+    </beans:bean>
+ 	
+	<!-- spring data jpa용 jpa Repository 패키지 추가 -->
+	<jpa:repositories base-package="kr.go.museum.dino.smartapp.repository" />
+    
+    <!-- db연동은 이거 써야됨. 재연결은 validationQuery와 testOnBorrow 주면 되고, autoReconnect는 필요없음 -->
+    <beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <beans:property name="driverClassName" value="${db.driver}"/>
+        <beans:property name="url" value="${db.url}"/>
+        <beans:property name="username" value="${db.user}"/>
+        <beans:property name="password" value="${db.password}"/>
+        
+        <!-- DB 끊기지 않도록 처리 -->
+        <beans:property name="validationQuery" value="select 1"/>
+        <beans:property name="testWhileIdle" value="true"/>
+        <beans:property name="timeBetweenEvictionRunsMillis" value="7200000"/>
+    </beans:bean>
+    
+	<!-- spring data jpa용 JPA 설정 ( 엔티티 매니저 팩토리 등록 ) -->
+	<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+        <beans:property name="jpaProperties">
+            <beans:props>
+            	<!-- 여기는 jpa 전용 설정이기 때문에 validationQuery 등의 소스는 안 먹힌다. -->
+ 		         
+                <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+                <beans:prop key="hibernate.show_sql">true</beans:prop>
+                <beans:prop key="hibernate.format_sql">true</beans:prop>
+                <beans:prop key="hibernate.use_sql_comments">true</beans:prop>
+                <beans:prop key="hibernate.id.new_generator_mappings">true</beans:prop>
+            </beans:props>
+        </beans:property>
+       	<beans:property name="jpaVendorAdapter">            
+            <beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </beans:property>
+	</beans:bean>
+</beans:beans>		

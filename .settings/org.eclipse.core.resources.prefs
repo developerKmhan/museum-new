@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java/kr/go/museum/dino/smartapp/common/Common.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/contents/DinoController.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/manage/ManageController.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/manage/ManageService.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/model/User.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/repository/DinoRepository.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/user/UserController.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/user/UserService.java=UTF-8
+encoding//src/main/java/kr/go/museum/dino/smartapp/version/VersionController.java=UTF-8
+encoding//src/main/webapp/WEB-INF/templates/index.html=UTF-8
+encoding//src/main/webapp/WEB-INF/templates/login.html=UTF-8
